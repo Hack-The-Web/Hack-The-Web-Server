@@ -1,6 +1,7 @@
 package com.hack.network.server.channel.login
 
 import com.hack.api.network.login.LoginInformation
+import com.hack.api.network.login.LoginResponse
 import io.netty.buffer.ByteBuf
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.ByteToMessageDecoder
@@ -14,6 +15,6 @@ class LoginDecoder : ByteToMessageDecoder() {
         val password = buf.readCharSequence(passwordLength, Charset.defaultCharset()).toString()
         println(username)
         println(password)
-        out.add(LoginInformation(username, password))
+        out.add(LoginResponse(1, LoginInformation(username, password)))
     }
 }

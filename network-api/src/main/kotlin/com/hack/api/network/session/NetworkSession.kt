@@ -1,11 +1,11 @@
 package com.hack.api.network.session
 
 import com.hack.api.network.login.LoginInformation
-import com.hack.api.network.packets.GamePacket
+import com.hack.api.network.packets.IncomingPacket
 
 interface NetworkSession {
 
-    fun sendPacket(packet: GamePacket)
+    fun handleIncomingPacket(packet: IncomingPacket)
 
     fun queueLogin(login: LoginInformation)
 

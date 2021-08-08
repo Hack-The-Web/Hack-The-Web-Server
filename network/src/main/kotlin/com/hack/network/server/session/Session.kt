@@ -1,10 +1,9 @@
 package com.hack.network.server.session
 
 import com.hack.api.network.login.LoginInformation
-import com.hack.api.network.packets.GamePacket
+import com.hack.api.network.packets.IncomingPacket
 import com.hack.api.network.session.NetworkSession
 import com.hack.game.api.login.LoginManager
-import com.hack.network.server.GameServer
 import io.netty.channel.Channel
 import io.netty.channel.ChannelHandlerContext
 import io.netty.util.AttributeKey
@@ -15,8 +14,10 @@ class Session(private val ctx: ChannelHandlerContext) : NetworkSession, KoinComp
 
     private val loginManager: LoginManager<LoginInformation, NetworkSession> by inject()
 
-    override fun sendPacket(packet: GamePacket) {
-        ctx.write(packet)
+
+
+    override fun handleIncomingPacket(packet: IncomingPacket) {
+        TODO("Not yet implemented")
     }
 
     override fun queueLogin(login: LoginInformation) {

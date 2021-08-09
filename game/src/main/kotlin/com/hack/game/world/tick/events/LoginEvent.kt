@@ -20,6 +20,7 @@ class LoginEvent : WorldEvent {
 
         logins.forEach {
             if(loginManager.validate(it)) {
+                it.initialize()
                 entityManager.players.add(it)
             }
         }

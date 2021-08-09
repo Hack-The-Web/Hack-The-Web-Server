@@ -2,9 +2,14 @@ package com.hack.app
 
 import com.hack.api.network.login.LoginInformation
 import com.hack.api.network.session.NetworkSession
+import com.hack.app.helper.CommandHelper
 import com.hack.game.api.login.LoginManager
 import com.hack.game.api.world.entity.EntityManager
+import com.hack.game.api.world.entity.player.command.CommandRepository
 import com.hack.game.api.world.tick.WorldTick
+import com.hack.game.world.entity.EntityManagerImpl
+import com.hack.game.world.entity.player.commands.CommandRepositoryImpl
+import com.hack.game.world.tick.WorldTickImpl
 import com.hack.game.world.tick.events.LoginEvent
 import com.hack.game.world.tick.events.PlayersEvent
 import com.hack.network.server.GameServer
@@ -20,13 +25,16 @@ object Application {
         startKoin {
             modules(module {
                 single<LoginManager<LoginInformation, NetworkSession>> { com.hack.game.login.LoginManager() }
-                single<EntityManager> { com.hack.game.world.entity.EntityManager() }
-                single<WorldTick> { com.hack.game.world.tick.WorldTick() }
+                single<EntityManager> { EntityManagerImpl() }
+                single<WorldTick> { WorldTickImpl() }
+                single<CommandRepository> { CommandRepositoryImpl() }
             })
         }
+        val koin = GlobalContext.get()
         val server = GameServer(50000)
 
-        val worldTick = GlobalContext.get().get<WorldTick>()
+        val worldTick: WorldTick = koin.get()
+        CommandHelper.addDefaultCommands(koin.get())
 
         worldTick.subscribeEvent(PlayersEvent())
         worldTick.subscribeEvent(LoginEvent())

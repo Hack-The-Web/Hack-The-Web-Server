@@ -13,7 +13,7 @@ import java.util.concurrent.CancellationException
 import java.util.concurrent.Executors
 import kotlin.coroutines.CoroutineContext
 
-class WorldTick : WorldTick, CoroutineScope {
+class WorldTickImpl : WorldTick {
 
     private val executor = Executors.newSingleThreadExecutor().asCoroutineDispatcher()
 

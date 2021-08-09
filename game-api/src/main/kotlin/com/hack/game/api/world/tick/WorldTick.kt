@@ -1,9 +1,10 @@
 package com.hack.game.api.world.tick
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 
-interface WorldTick {
+interface WorldTick : CoroutineScope {
 
     val tick: Flow<Long>
     val events: MutableMap<String, Job>

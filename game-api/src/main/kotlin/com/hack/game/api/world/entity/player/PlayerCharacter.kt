@@ -6,5 +6,6 @@ interface PlayerCharacter : Character {
 
     fun logout()
     fun isActive() : Boolean
+    fun initialize()
 
 }

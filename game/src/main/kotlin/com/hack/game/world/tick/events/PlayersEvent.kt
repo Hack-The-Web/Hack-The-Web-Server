@@ -10,7 +10,7 @@ class PlayersEvent : WorldEvent {
 
     override val id: String = "players_tick"
 
-    override fun onTick(currentTick: Long) {
+    override suspend fun onTick(currentTick: Long) {
 
         entityManager.players.forEach {
             if(it.isActive()) {

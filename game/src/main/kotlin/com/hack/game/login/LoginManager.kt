@@ -12,6 +12,7 @@ class LoginManager : LoginManager<LoginInformation, NetworkSession> {
     override val logoutQueue: ArrayDeque<PlayerCharacter> = ArrayDeque()
 
     override fun initializeLogin(info: LoginInformation, session: NetworkSession) {
+        println("Adding player ${info.username} to login queue")
         loginQueue.add(Player(info.username, session))
     }
 

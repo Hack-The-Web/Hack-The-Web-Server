@@ -8,16 +8,13 @@ import io.netty.handler.codec.ByteToMessageDecoder
 class HandshakeDecoder : ByteToMessageDecoder() {
     override fun decode(ctx: ChannelHandlerContext, buf: ByteBuf, out: MutableList<Any>) {
         val opcode = buf.readUnsignedByte().toInt()
-        println("Here!")
         if(opcode == LOGIN_OPCODE) {
             val revision = buf.readInt()
-            println("Login request - $revision")
+            println("Login request - Revision $revision")
             if(revision != REVISION) {
                 ctx.close()
             }
             out.add(HandshakeResponse(1))
-        } else if(opcode == UPDATE_OPCODE) {
-            TODO("Write update request code.")
         }
     }
 

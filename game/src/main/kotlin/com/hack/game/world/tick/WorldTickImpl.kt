@@ -22,7 +22,7 @@ class WorldTickImpl : WorldTick {
     override val events: MutableMap<String, Job> = mutableMapOf()
 
     override val tick = flow {
-        val duration = 100L
+        val duration = 500L
         var lastTick = 0L
         while(true) {
             val currentTick = if(lastTick < 0) duration else lastTick

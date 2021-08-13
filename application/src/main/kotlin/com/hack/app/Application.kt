@@ -4,12 +4,15 @@ import com.hack.api.network.login.LoginInformation
 import com.hack.api.network.session.NetworkSession
 import com.hack.app.helper.CommandHelper
 import com.hack.game.api.login.LoginManager
+import com.hack.game.api.world.VirtualISP
 import com.hack.game.api.world.entity.EntityManager
 import com.hack.game.api.world.entity.player.command.CommandRepository
 import com.hack.game.api.world.tick.WorldTick
+import com.hack.game.world.VirtualISPImpl
 import com.hack.game.world.entity.EntityManagerImpl
 import com.hack.game.world.entity.player.commands.CommandRepositoryImpl
 import com.hack.game.world.tick.WorldTickImpl
+import com.hack.game.world.tick.events.DebugEvent
 import com.hack.game.world.tick.events.LoginEvent
 import com.hack.game.world.tick.events.PlayersEvent
 import com.hack.network.server.GameServer
@@ -28,6 +31,7 @@ object Application {
                 single<EntityManager> { EntityManagerImpl() }
                 single<WorldTick> { WorldTickImpl() }
                 single<CommandRepository> { CommandRepositoryImpl() }
+                single<VirtualISP> { VirtualISPImpl() }
             })
         }
         val koin = GlobalContext.get()
@@ -38,6 +42,7 @@ object Application {
 
         worldTick.subscribeEvent(PlayersEvent())
         worldTick.subscribeEvent(LoginEvent())
+        worldTick.subscribeEvent(DebugEvent("debug_event"))
 
         server.start()
 

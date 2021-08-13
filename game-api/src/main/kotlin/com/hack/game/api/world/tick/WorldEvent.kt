@@ -6,6 +6,6 @@ interface WorldEvent : KoinComponent {
 
     val id: String
 
-    fun onTick(currentTick: Long)
+    suspend fun onTick(currentTick: Long)
 
 }

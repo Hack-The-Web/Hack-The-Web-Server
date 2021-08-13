@@ -1,9 +1,7 @@
 package com.hack.api.network.session
 
 import com.hack.api.network.login.LoginInformation
-import com.hack.api.network.packets.GamePacketDecoder
-import com.hack.api.network.packets.IncomingPacket
-import com.hack.api.network.packets.PacketHandler
+import com.hack.api.network.packets.*
 import com.hack.api.network.session.PacketDispatcher.PACKETS
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +18,10 @@ interface NetworkSession {
     fun isActive(): Boolean
 
     fun destroy()
+
+    fun sendPacket(gamePacket: GamePacketEncoder)
+
+    fun sendPackets()
 
     fun <T> handlePacket(transformer: GamePacketDecoder<T>, action: suspend (T) -> Unit)
     fun <T> handlePacket(transformer: GamePacketDecoder<T>, action: PacketHandler<T>)

@@ -13,6 +13,9 @@ subprojects {
     }
 
     repositories {
+        maven("http://legionkt.com:8085/repository/maven-snapshots/") {
+            isAllowInsecureProtocol = true
+        }
         mavenCentral()
     }
 

@@ -14,7 +14,7 @@ class LoginEvent : WorldEvent {
 
     override val id: String = "login_event"
 
-    override fun onTick(currentTick: Long) {
+    override suspend fun onTick(currentTick: Long) {
 
         val logins = loginManager.loginQueue.take(40)
 
@@ -34,7 +34,6 @@ class LoginEvent : WorldEvent {
         }
 
         loginManager.logoutQueue.removeAll(logouts)
-
     }
 
 }

@@ -9,11 +9,16 @@ import io.netty.channel.nio.NioEventLoopGroup
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.util.concurrent.ThreadFactory
 
 class GameServer(val port: Int) : KoinComponent {
 
-    private val bossEventGroup: NioEventLoopGroup = NioEventLoopGroup(Runtime.getRuntime().availableProcessors() / 2)
-    private val workerEventGroup: NioEventLoopGroup = NioEventLoopGroup(1)
+    private val bossEventGroup: NioEventLoopGroup = NioEventLoopGroup(Runtime.getRuntime().availableProcessors() / 2, ThreadFactory {
+        Thread(it).also { it.isDaemon = true }
+    })
+    private val workerEventGroup: NioEventLoopGroup = NioEventLoopGroup(1, ThreadFactory {
+        Thread(it).also { it.isDaemon = true }
+    })
 
     private val tick: WorldTick by inject()
 

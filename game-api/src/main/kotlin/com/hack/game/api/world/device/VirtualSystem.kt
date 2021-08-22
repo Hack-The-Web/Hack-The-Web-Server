@@ -1,6 +1,7 @@
 package com.hack.game.api.world.device
 
 import com.hack.game.api.world.device.accounts.VirtualAccountManager
+import com.hack.game.api.world.device.events.VirtualSystemEventManager
 import com.hack.game.api.world.device.hardware.VirtualCPU
 import com.hack.game.api.world.device.hardware.VirtualDisk
 import com.hack.game.api.world.device.hardware.VirtualNetworkCard
@@ -17,5 +18,6 @@ interface VirtualSystem {
     val networkCard: VirtualNetworkCard
 
     val accountManager: VirtualAccountManager
+    val systemEvents: VirtualSystemEventManager
 
 }

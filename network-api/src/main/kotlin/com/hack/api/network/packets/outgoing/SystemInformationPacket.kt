@@ -1,6 +1,7 @@
 package com.hack.api.network.packets.outgoing
 
 import com.hack.api.network.packets.GamePacketEncoder
+import com.hack.api.network.packets.buffer.BufferExtensions.writeString
 import java.io.DataOutputStream
 
 class SystemInformationPacket(val displayName: String,
@@ -10,18 +11,22 @@ class SystemInformationPacket(val displayName: String,
                               val networkCardUsage: Int,
                               val totalMoney: Int,
                               val totalBTC: Double,
+                              val serverTime: Long,
+                              val onlinePlayers: Int,
                               val publicAddress: String) : GamePacketEncoder {
 
     override val opcode: Int = 1
 
     override fun DataOutputStream.encode() {
-        writeUTF(displayName)
+        writeString(displayName)
         writeInt(diskUsage)
         writeInt(ramUsage)
         writeInt(cpuUsage)
         writeInt(networkCardUsage)
         writeInt(totalMoney)
         writeDouble(totalBTC)
-        writeUTF(publicAddress)
+        writeLong(serverTime)
+        writeInt(onlinePlayers)
+        writeString(publicAddress)
     }
 }

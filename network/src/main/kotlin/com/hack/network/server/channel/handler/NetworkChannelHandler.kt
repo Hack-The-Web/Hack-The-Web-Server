@@ -36,6 +36,7 @@ class NetworkChannelHandler : ChannelInboundHandlerAdapter(), KoinComponent {
         } else {
             ctx.writeAndFlush(msg)
         }
+
     }
 
     override fun channelInactive(ctx: ChannelHandlerContext) {

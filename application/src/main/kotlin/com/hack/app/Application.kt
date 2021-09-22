@@ -15,6 +15,7 @@ import com.hack.game.world.tick.WorldTickImpl
 import com.hack.game.world.tick.events.DebugEvent
 import com.hack.game.world.tick.events.LoginEvent
 import com.hack.game.world.tick.events.PlayersEvent
+import com.hack.game.world.tick.events.VirtualSystemsEvent
 import com.hack.network.server.GameServer
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
@@ -42,6 +43,7 @@ object Application {
 
         worldTick.subscribeEvent(PlayersEvent())
         worldTick.subscribeEvent(LoginEvent())
+        worldTick.subscribeEvent(VirtualSystemsEvent())
         worldTick.subscribeEvent(DebugEvent("debug_event"))
 
         server.start()

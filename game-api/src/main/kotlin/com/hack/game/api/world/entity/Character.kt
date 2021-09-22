@@ -9,6 +9,6 @@ interface Character : KoinComponent {
 
     val vsManager: VirtualSystemManager
 
-    fun onTick(currentTick: Long)
+    suspend fun onTick(currentTick: Long)
 
 }

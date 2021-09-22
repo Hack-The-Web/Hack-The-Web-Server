@@ -13,12 +13,13 @@ class VirtualAccountManagerImpl : VirtualAccountManager {
     private val _accounts = mutableMapOf<String, VirtualAccount>(
         "root" to VirtualAccountImpl("root", PasswordGenerator.newPassword())
     )
+    private val _loggedInAccounts = mutableMapOf<String, VirtualAccount>()
 
     override val accounts: Map<String, VirtualAccount> = _accounts
+    override val loggedInAccounts: Map<String, VirtualAccount> = _loggedInAccounts
 
-    override fun createUser(username: String, password: String) {
-        if(_accounts.containsKey(username)) {
-            val user = _accounts[username]!!
+    override fun createUser(user: VirtualAccount, username: String, password: String) {
+        if(_accounts.containsKey(user.username)) {
             if(user.hasRoot() || user.isAccountManager()) {
                 val newUser = VirtualAccountImpl(username, password)
                 _accounts[newUser.username] = newUser
@@ -51,6 +52,25 @@ class VirtualAccountManagerImpl : VirtualAccountManager {
                 chmod.permissionManager.revokePermission(permission)
             }
         }
+    }
+
+    override fun login(username: String, password: String, publicAddress: String): Boolean {
+        if(_accounts.containsKey(username)) {
+            val acc = _accounts[username]!!
+            if(acc.username == username && acc.password == password) {
+                _loggedInAccounts[publicAddress] = acc
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun logout(publicAddress: String) {
+        _loggedInAccounts.remove(publicAddress)
+    }
+
+    override fun account(publicAddress: String): VirtualAccount {
+        return _loggedInAccounts[publicAddress]!!
     }
 
 }

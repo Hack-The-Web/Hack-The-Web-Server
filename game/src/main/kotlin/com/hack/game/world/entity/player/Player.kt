@@ -14,7 +14,6 @@ import com.hack.game.api.world.entity.player.system.VirtualSystemManager
 import com.hack.game.api.world.entity.player.widget.ContentTabs
 import com.hack.game.api.world.entity.player.widget.WidgetManager
 import com.hack.game.world.device.accounts.root
-import com.hack.game.world.device.events.VirtualSystemEventImpl
 import com.hack.game.world.entity.player.commands.CommandHandler
 import com.hack.game.world.entity.player.system.VirtualSystemManagerImpl
 import com.hack.game.world.entity.player.widget.OpenWidgetHandler
@@ -34,6 +33,7 @@ class Player(override val name: String, private val session: NetworkSession) : P
     override val vsManager: VirtualSystemManager = VirtualSystemManagerImpl(this)
 
     override fun logout() {
+        vsManager.mountedSystem?.accountManager?.logout("127.0.0.1")
         session.destroy()
         loginManager.logoutQueue.add(this)
     }
@@ -50,15 +50,12 @@ class Player(override val name: String, private val session: NetworkSession) : P
         if(vsManager.mountedSystem == null) {
             vsManager.mount("System 0")
             val sys = vsManager.mountedSystem!!
-            sys.systemEvents.fireEvent(VirtualSystemEventImpl(
-                LocalDateTime.now(),
-                sys.accountManager.root(),
-                "Logged in"
-            ))
+            val root = sys.accountManager.root()
+            sys.loginFrom(root.username, root.password, "127.0.0.1")
         }
     }
 
-    override fun onTick(currentTick: Long) {
+    override suspend fun onTick(currentTick: Long) {
         session.sendPacket(SystemInformationPacket(
             name,
             0,

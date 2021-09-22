@@ -8,7 +8,7 @@ open class Npc(override val name: String) : NpcCharacter {
 
     override val vsManager: VirtualSystemManager = VirtualSystemManagerImpl(this)
 
-    override fun onTick(currentTick: Long) {
+    override suspend fun onTick(currentTick: Long) {
 
     }
 

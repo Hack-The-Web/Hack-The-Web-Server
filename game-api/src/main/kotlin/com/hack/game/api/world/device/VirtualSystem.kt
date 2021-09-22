@@ -20,4 +20,12 @@ interface VirtualSystem {
     val accountManager: VirtualAccountManager
     val systemEvents: VirtualSystemEventManager
 
+    suspend fun onTick(currentTick: Long)
+
+    fun installSoftware(softwareId: String)
+    fun uninstallSoftware(softwareId: String)
+    fun runSoftware(softwareId: String)
+
+    fun loginFrom(username: String, password: String, publicAddress: String)
+
 }

@@ -23,6 +23,11 @@ subprojects {
         "implementation"(kotlin("stdlib"))
         "implementation"("io.insert-koin:koin-core:3.1.2")
         "implementation"("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+        "implementation"("org.junit.jupiter:junit-jupiter-api:5.8.0-RC1")
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
     }
 }
 
